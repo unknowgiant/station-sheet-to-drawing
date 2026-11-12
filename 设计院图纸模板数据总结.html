@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>设计院真实图纸模板数据总结（大张物流园西 + 广文路通信站）</title>
+<style>
+  :root{
+    --primary:#0f4c81; --primary-light:#e8f0f8; --accent:#c8a45c;
+    --text:#2c3e50; --muted:#7a8a99; --line:#dce4ec;
+    --red:#c0392b; --green:#1e8449; --blue:#2471a3;
+    --bg:#f7f9fb; --card:#ffffff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;color:var(--text);background:var(--bg);line-height:1.75;font-size:15px;}
+  .page{max-width:1080px;margin:0 auto;padding:0 28px 60px;}
+  /* 封面 */
+  .cover{background:linear-gradient(135deg,#0f4c81 0%,#14528f 55%,#1a5f9e 100%);color:#fff;border-radius:0 0 18px 18px;padding:56px 48px 42px;margin-bottom:36px;position:relative;overflow:hidden;}
+  .cover::after{content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border:40px solid rgba(255,255,255,.07);border-radius:50%;}
+  .cover .tag{display:inline-block;border:1px solid rgba(255,255,255,.5);padding:3px 14px;border-radius:20px;font-size:13px;letter-spacing:2px;margin-bottom:18px;}
+  .cover h1{font-size:30px;font-weight:700;letter-spacing:1px;margin-bottom:14px;position:relative;z-index:1;}
+  .cover .sub{font-size:15px;opacity:.85;margin-bottom:26px;position:relative;z-index:1;}
+  .cover .meta{display:flex;flex-wrap:wrap;gap:26px;font-size:13.5px;opacity:.92;border-top:1px solid rgba(255,255,255,.25);padding-top:18px;position:relative;z-index:1;}
+  .cover .meta b{font-weight:600;margin-right:6px;}
+  /* 目录 */
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 28px;margin-bottom:34px;}
+  .toc h3{font-size:15px;color:var(--primary);margin-bottom:12px;letter-spacing:1px;}
+  .toc ol{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:6px 30px;}
+  .toc li{font-size:14px;padding-left:0;}
+  .toc a{color:var(--text);text-decoration:none;}
+  .toc a:hover{color:var(--primary);}
+  .toc .no{color:var(--accent);font-weight:700;margin-right:8px;font-family:Georgia,serif;}
+  /* 章节 */
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:30px 34px;margin-bottom:28px;}
+  h2{font-size:20px;color:var(--primary);padding-left:14px;border-left:5px solid var(--accent);margin-bottom:8px;letter-spacing:.5px;}
+  h2 .en{font-size:12px;color:var(--muted);font-weight:400;margin-left:10px;letter-spacing:1px;}
+  h3{font-size:16.5px;color:var(--primary);margin:26px 0 12px;}
+  h4{font-size:15px;color:#34495e;margin:18px 0 8px;}
+  p{margin:8px 0;}
+  .lead{color:var(--muted);font-size:14px;margin-bottom:16px;}
+  /* 表格 */
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px;}
+  th{background:var(--primary);color:#fff;padding:9px 10px;text-align:left;font-weight:600;white-space:nowrap;}
+  td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  tr:nth-child(even) td{background:#fafcfe;}
+  tr:hover td{background:var(--primary-light);}
+  td.center,th.center{text-align:center;}
+  .tbl-wrap{overflow-x:auto;}
+  /* 标记 */
+  .badge{display:inline-block;padding:1px 10px;border-radius:10px;font-size:12px;margin:1px 2px;white-space:nowrap;}
+  .b-red{background:#fdecea;color:var(--red);}
+  .b-green{background:#e9f7ef;color:var(--green);}
+  .b-blue{background:#eaf2fa;color:var(--blue);}
+  .b-gray{background:#eef1f4;color:#5d6d7e;}
+  .b-gold{background:#faf3e3;color:#9c7a1f;}
+  code{background:#f0f3f6;border:1px solid var(--line);border-radius:4px;padding:1px 7px;font-family:Consolas,monospace;font-size:13px;color:#c0392b;}
+  .note{background:#fafcfe;border-left:4px solid var(--accent);padding:12px 18px;border-radius:0 8px 8px 0;margin:14px 0;font-size:14px;}
+  .note b{color:var(--primary);}
+  ul{padding-left:22px;margin:8px 0;}
+  li{margin:4px 0;}
+  .cols2{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  @media (max-width:860px){.cols2{grid-template-columns:1fr;}}
+  .stat{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0 18px;}
+  .stat .box{flex:1;min-width:150px;background:var(--primary-light);border-radius:10px;padding:14px 18px;text-align:center;}
+  .stat .num{font-size:26px;font-weight:700;color:var(--primary);font-family:Georgia,serif;}
+  .stat .lbl{font-size:12.5px;color:var(--muted);margin-top:2px;}
+  .pagebreak{height:0;}
+  @media print{.cover{border-radius:0;}section{page-break-inside:avoid;}}
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="tag">表生图系统 · 三期模板基线</div>
+  <h1>设计院真实图纸模板数据总结</h1>
+  <div class="sub">基于两张真实施工图纸逆向解析：洛阳涧西大张物流园西（35m 景观塔） + 洛阳涧西广文路通信站（楼顶 12m 增高架）</div>
+  <div class="meta">
+    <span><b>设计院</b>中国移动通信集团设计院有限公司</span>
+    <span><b>项目</b>2025 年极简站（二期改造站）</span>
+    <span><b>出图日期</b>2025.05 / 2025.06</span>
+    <span><b>比例</b>1:50　<b>单位</b>mm</span>
+  </div>
+</div>
+
+<div class="page">
+
+<div class="toc">
+  <h3>目 录</h3>
+  <ol>
+    <li><a href="#s1"><span class="no">01</span>两站总览对比</a></li>
+    <li><a href="#s2"><span class="no">02</span>单站成套图纸构成（8~9 张）</a></li>
+    <li><a href="#s3"><span class="no">03</span>标题栏与图号体系</a></li>
+    <li><a href="#s4"><span class="no">04</span>表格体系（5 类标准表）</a></li>
+    <li><a href="#s5"><span class="no">05</span>图例与标注体系</a></li>
+    <li><a href="#s6"><span class="no">06</span>站点数据字段全景</a></li>
+    <li><a href="#s7"><span class="no">07</span>对三期开发的启示</a></li>
+  </ol>
+</div>
+
+<!-- ============ 01 总览 ============ -->
+<section id="s1">
+  <h2>一、两站总览对比<span class="en">OVERVIEW</span></h2>
+  <p class="lead">两站同属"2025 年极简站二期"项目、同一设计院，图纸模板完全一致，差异仅在站点数据本身，正好覆盖了"地面塔"与"楼顶增高架"两类典型场景。</p>
+  <div class="stat">
+    <div class="box"><div class="num">2</div><div class="lbl">真实站点图纸</div></div>
+    <div class="box"><div class="num">8~9</div><div class="lbl">单站成套子图数量</div></div>
+    <div class="box"><div class="num">5</div><div class="lbl">标准表格体系</div></div>
+    <div class="box"><div class="num">2300+</div><div class="lbl">解析文本条目合计</div></div>
+  </div>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th style="width:130px">对比项</th><th>大张物流园西</th><th>广文路通信站</th></tr>
+    <tr><td>站点性质</td><td>极简站改造基站，<span class="badge b-red">拆除 1 个 BBU</span>、拆除 GPS 天线、利旧原有野战光缆</td><td>改造 4G 定向基站，<span class="badge b-red">原有 1 个 4G BBU 搬迁至 CRAN 机房</span>、拆除 GNSS 天线、新增 GPS 天线</td></tr>
+    <tr><td>站址</td><td>洛阳市涧西区中州西路大张物流园西</td><td>机房：广文路通信站（无线机房三层）；远端站：广文南路与科文路交叉口向南 200 米路西</td></tr>
+    <tr><td>经纬度</td><td>112.32364°E / 34.68807°N</td><td>112.33731°E / 34.66903°N</td></tr>
+    <tr><td>塔桅形式</td><td><span class="badge b-blue">35 米景观塔（单管塔）</span></td><td><span class="badge b-blue">楼顶 12 米增高架</span>（五层建筑 + 炮楼）</td></tr>
+    <tr><td>平台/挂高</td><td>四层平台：24000 / 27000 / 30000 / 33000 mm</td><td>天线挂高 24000 / 26000 mm（楼顶约 15000 + 增高架）</td></tr>
+    <tr><td>天面配置</td><td>新增/原有单频、多频定向天线、AAU、GNSS 天线（含避雷器）</td><td>原 4+4 天线 ×4、5G AAU ×3、TDL-F 天线、新增 GPS 天线</td></tr>
+    <tr><td>机房场景</td><td>机房内综合柜改造</td><td>同左，另含 6 波无源波分、至 SPN 传输</td></tr>
+    <tr><td>抗震设防</td><td>7 度（YD 5059-2005，M6 锚栓 ×4）</td><td>7 度（同规范）</td></tr>
+    <tr><td>出图日期</td><td>2025.06</td><td>2025.05</td></tr>
+    <tr><td>图号系列</td><td>标题栏含"图号"字段（值为签名图块/属性，未提取到文本）</td><td>2025HACT0001-002-WX-LY-01 ~ 07 及施工安全措施说明（一）（二）</td></tr>
+  </table>
+  </div>
+  <div class="note"><b>要点：</b>大张站是"地面独立塔 + 平台分层挂天线"，广文路站是"楼顶增高架 + 楼层标高"——这两类正是表生图系统需要覆盖的主要塔桅形态，其标注方式（平台标高 vs 天线挂高标尺）均已在图纸中给出样例。</div>
+</section>
+
+<!-- ============ 02 图纸构成 ============ -->
+<section id="s2">
+  <h2>二、单站成套图纸构成<span class="en">DRAWING SET</span></h2>
+  <p class="lead">每站一套 DWG 内含 8~9 张子图，布局横向排布，每张独立图框 + 标题栏。按图号顺序：</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th class="center" style="width:70px">序号</th><th style="width:230px">图纸名称</th><th>核心内容</th><th class="center" style="width:110px">挂载表格</th></tr>
+    <tr><td class="center">1</td><td>工艺要求及施工安全措施说明图（一）</td><td>安全生产要求、一般规定、设备机架安装和线缆布放、设备安装、设备加电测试；设备安装安全风险因素表（13 项）；强制性标准规范清单（13 项）</td><td class="center">风险表 + 规范清单</td></tr>
+    <tr><td class="center">2</td><td>工艺要求及施工安全措施说明图（二）</td><td>防雷接地要求、抗震加固要求（YD 5059-2005）、消防安全、防洪要求、环境保护；天馈线安装安全风险因素表（20 项）</td><td class="center">风险表</td></tr>
+    <tr><td class="center">3</td><td>无线基站机房布置平面图</td><td>机房设备布置（综合柜、开关电源、蓄电池、空调、ODF、走线架）、设备编号 5~12、馈线洞 500×400（下沿距地 2100）、水平/垂直走线架宽 500mm、房间尺寸标注、指北针 N</td><td class="center">安装工作量表 + 走线架量表</td></tr>
+    <tr><td class="center">4</td><td>无线基站综合柜立面图（一）</td><td>综合柜 600×600×2000mm 立面、U 位划分（1U=44.45mm）、BBU 面板图（UMPTg 主控 / UBBP 基带 / UPEUe 电源 / FANf 风扇板件级标注）、原有 DCDU、本期拆除 BBU 标注</td><td class="center">风险因素小表</td></tr>
+    <tr><td class="center">5</td><td>无线基站综合柜立面图（二）</td><td>直流分配单元、6 波无源波分 + 无源插框（COM/NA 端口）、至 SPN 传输路由、安装说明（M6×4 螺栓、上方净高 ≥1U 散热）、图例（原有/预留/拆除）</td><td class="center">风险因素小表</td></tr>
+    <tr><td class="center">6</td><td>无线基站机房导线路由布置示意图（拆除版）</td><td>机房设备间线缆路由（电源线/地线/光缆三色图例）、导线编号 001~009 标注、拆除线缆说明（逐条核对、绝缘防护、分类盘放）</td><td class="center">电缆明细表 + 拆除量汇总</td></tr>
+    <tr><td class="center">7</td><td>无线基站机房导线路由布置示意图（安装版）</td><td>同上布局，内容为本期新增布线（两版差异见 4.2 节）</td><td class="center">电缆明细表 + 安装量汇总</td></tr>
+    <tr><td class="center">8</td><td>无线基站天馈线系统安装示意图（一）</td><td>塔桅立面（景观塔/增高架）、I-I 剖面视图、天线挂高标尺、天线/AAU/GPS 布置及方位角 R、原有馈线洞位置</td><td class="center" rowspan="2">天馈加固材料表（19 项）</td></tr>
+    <tr><td class="center">9</td><td>无线基站天馈线系统安装示意图（二）</td><td>俯视图 + I-I 视图、每平台/抱杆天线状态标注（原 4+4 天线、5G AAU、TDL-F）、避雷针 45° 保护范围说明、接地要求（≤10Ω、弯曲 &gt;90°、曲率半径 &gt;130mm）</td></tr>
+  </table>
+  </div>
+  <div class="note"><b>模板化程度极高：</b>第 1、2 张安全说明图的文字内容两站几乎逐字相同（通用模板），仅"本站是否涉及 √"和站点说明段不同；这意味着三期可以将其做成<b>固定模板块 + 少量变量</b>。</div>
+</section>
+
+<!-- ============ 03 标题栏 ============ -->
+<section id="s3">
+  <h2>三、标题栏与图号体系<span class="en">TITLE BLOCK</span></h2>
+  <p class="lead">每张子图右下角独立标题栏，字段两站完全一致：</p>
+  <div class="cols2">
+    <div>
+      <h4>标题栏字段</h4>
+      <ul>
+        <li><b>设计院</b>：中国移动通信集团设计院有限公司</li>
+        <li><b>签署栏（5 项）</b>：项目总负责人、专业负责人、设计人、校审人、专业审核人（大张站多数为签名图块，未展开文本；广文路站部分填"示意"）</li>
+        <li><b>制表栏（4 项）</b>：图号、出图日期、比例（1:50）、单位（mm）</li>
+        <li><b>图名</b>：黑体大字"洛阳涧西 XX 站 + 图名"，位于图框顶部中央，关键词用蓝/青色强调</li>
+      </ul>
+    </div>
+    <div>
+      <h4>图号编号规则（广文路站样例）</h4>
+      <ul>
+        <li>编号：<code>2025HACT0001-002-WX-LY-XX</code></li>
+        <li>结构：项目编号(2025HACT0001) - 单项号(002) - 专业代码(WX=无线) - 地区(LY=洛阳) - 子图序号(01~07)</li>
+        <li>安全说明图图号后缀："LY-施工安全措施说明（一）（二）"</li>
+        <li>对应关系：01 机房平面 / 02 综合柜一 / 03 导线路由·拆除版 / 04 导线路由·安装版 / 05 综合柜二 / 06~07 天馈系统</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 表格体系 ============ -->
+<section id="s4">
+  <h2>四、表格体系（5 类标准表）<span class="en">TABLES</span></h2>
+  <p class="lead">这是全模板最核心的数据载体，表结构两站完全一致，仅数据行内容不同。</p>
+
+  <h3>4.1 安装工作量表（机房布置平面图）</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th colspan="3">表头</th><th colspan="3">数量三态</th></tr>
+    <tr><th>序号 / 名称 / 型号 / 厂家</th><th>规格（宽×深×高）</th><th>单位</th><th class="center">原有</th><th class="center">新增</th><th class="center">拆除</th></tr>
+  </table>
+  </div>
+  <p>标准设备行（共 17 项，与单位固定搭配）：</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th style="width:56px">序号</th><th>设备名称</th><th style="width:70px">单位</th><th style="width:56px">序号</th><th>设备名称</th><th style="width:70px">单位</th></tr>
+    <tr><td class="center">1-1</td><td>无线设备-主控板</td><td class="center">块</td><td class="center">10</td><td>蓄电池</td><td class="center">组</td></tr>
+    <tr><td class="center">1-2</td><td>无线设备-基带板（反开 4G 基带板）</td><td class="center">块</td><td class="center">11</td><td>空调</td><td class="center">台</td></tr>
+    <tr><td class="center">1-3</td><td>无线设备</td><td class="center">架</td><td class="center">12</td><td>直流配电箱</td><td class="center">块</td></tr>
+    <tr><td class="center">3</td><td>GSM900 无线设备</td><td class="center">架</td><td class="center">13</td><td>地线排</td><td class="center">套</td></tr>
+    <tr><td class="center">4</td><td>GSM1800 无线设备</td><td class="center">架</td><td class="center">14</td><td>基站门禁和监控</td><td class="center">架</td></tr>
+    <tr><td class="center">5</td><td>传输综合柜</td><td class="center">架</td><td class="center">15</td><td>ODF（光纤配线架）</td><td class="center">台</td></tr>
+    <tr><td class="center">6</td><td>交流配电箱/屏（AC）</td><td class="center">台</td><td class="center">16</td><td>直流分配单元</td><td class="center">个</td></tr>
+    <tr><td class="center">7</td><td>嵌入开关电源（DC）</td><td class="center">架</td><td class="center">17</td><td>无源波分设备远端</td><td class="center">个</td></tr>
+    <tr><td class="center">8</td><td>整流模块</td><td class="center">块</td><td class="center">18</td><td>光模块</td><td class="center">个</td></tr>
+  </table>
+  </div>
+  <p>另有<b>走线架小表</b>：水平走线架（宽 500mm）/ 垂直走线架（宽 500mm），单位"米"，填新增数量。新增、拆除数量以<b>红色字体</b>标注。</p>
+
+  <h3>4.2 5G 电力电缆明细表（导线路由图，每张一份）</h3>
+  <p>表头：导线编号 / 序号 / 导线路由（由 → 到）/ 敷设方式 / 导线规格(mm) / 导线条数 / 导线长度(米·条) / 合计(米) / 线缆外皮颜色 / 备注。固定 9 条导线：</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th class="center">编号</th><th>由</th><th>到</th><th>敷设</th><th>规格</th><th class="center">条数</th><th>外皮颜色</th></tr>
+    <tr><td class="center">001</td><td>直流分配单元</td><td>BBU 设备</td><td>架内</td><td>RVVZ 1×4mm</td><td class="center">2</td><td>红色、蓝色</td></tr>
+    <tr><td class="center">002</td><td>高频开关组合电源</td><td>直流分配单元</td><td>走线架</td><td>RVZ-600V-1×16mm</td><td class="center">2</td><td>黑色</td></tr>
+    <tr><td class="center">003</td><td>室内地排</td><td>BBU 设备外壳</td><td>走线架</td><td>RVZ-600V-1×6mm</td><td class="center">2</td><td>黄绿色</td></tr>
+    <tr><td class="center">004</td><td>综合柜地排</td><td>直流分配单元</td><td>架内</td><td>RVZ-600V-1×6mm</td><td class="center">2</td><td>黄绿色</td></tr>
+    <tr><td class="center">005</td><td>综合柜地排</td><td>综合柜</td><td>架内</td><td>RVZ-600V-1×16mm</td><td class="center">2</td><td>黄绿色</td></tr>
+    <tr><td class="center">006</td><td>BBU 设备</td><td>传输设备</td><td>走线架</td><td>单模跳纤</td><td class="center">2</td><td>黄色</td></tr>
+    <tr><td class="center">007</td><td>BBU 设备</td><td>ODF / 无源波分设备</td><td>走线架</td><td>单模跳线 / 野战光缆（2 芯）</td><td class="center">2</td><td>黑色</td></tr>
+    <tr><td class="center">008</td><td>直流分配单元</td><td>AAU</td><td>走线架</td><td>RVVZ 2×6mm / 2×10mm</td><td class="center">2</td><td>红色、蓝色</td></tr>
+    <tr><td class="center">009</td><td>BBU 设备</td><td>GNSS</td><td>走线架</td><td>1/2" 馈线</td><td class="center">1</td><td>黑色</td></tr>
+  </table>
+  </div>
+  <ul>
+    <li>备注列：001、003~006 标"5G 设备厂家提供"，005 另有"综合柜厂家提供"；008、009 标"<b>导线长度详见天馈图</b>"。</li>
+    <li>敷设方式仅两档：走线架 / 架内。</li>
+    <li><b>两版差异</b>（同一站两张路由图）：拆除版 007 为 BBU→ODF（单模跳线）、008 为 RVVZ 2×6mm；安装版 007 为 BBU→无源波分设备（野战光缆 2 芯）、008 升级为 RVVZ 2×10mm、另有 RVVZ 2×3.3mm（RRU 电源线）/RVZ-600V-16mm（安装量汇总中）。</li>
+  </ul>
+
+  <h3>4.3 电力电缆安装量 / 拆除量汇总表（导线路由图）</h3>
+  <p>两个并列小表，列：导线规格(mm) / 导线条数(条) / 导线长度(米) / 总长度(米)。按"5G 电力电缆安装量""电力电缆拆除量"分别汇总 00X 号导线。</p>
+
+  <h3>4.4 5G 天馈线系统安装加固材料表（天馈图）</h3>
+  <p>表头：序号 / 名称 / 规格 / 单位 / 新增数量 / 拆除数量 / 备注。标准 19 项：</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th class="center" style="width:56px">序号</th><th>名称</th><th style="width:80px">单位</th><th class="center" style="width:56px">序号</th><th>名称</th><th style="width:80px">单位</th></tr>
+    <tr><td class="center">1</td><td>RRU</td><td class="center">副</td><td class="center">11</td><td>电源线接地件</td><td class="center">套</td></tr>
+    <tr><td class="center">2</td><td>天线</td><td class="center">副</td><td class="center">12</td><td>RRU 接地线</td><td class="center">米</td></tr>
+    <tr><td class="center">3</td><td>光缆</td><td class="center">米</td><td class="center">13</td><td>集束电缆（4 芯）</td><td class="center">根</td></tr>
+    <tr><td class="center">4</td><td>光缆加固卡子</td><td class="center">个</td><td class="center">14</td><td>集束电缆（5 芯）</td><td class="center">根</td></tr>
+    <tr><td class="center">5</td><td>RRU 电源线</td><td class="center">米</td><td class="center">15</td><td>单频天线</td><td class="center">副</td></tr>
+    <tr><td class="center">6</td><td>光模块</td><td class="center">个</td><td class="center">16</td><td>多频天线（八通道）</td><td class="center">副</td></tr>
+    <tr><td class="center">7</td><td>GNSS 馈线（1/2" 馈线）</td><td class="center">米</td><td class="center">17</td><td>射频跳线</td><td class="center">条</td></tr>
+    <tr><td class="center">8</td><td>GNSS 馈线接地线</td><td class="center">米</td><td class="center">18</td><td>电调控制线</td><td class="center">条</td></tr>
+    <tr><td class="center">9</td><td>GNSS 天线（含避雷器）</td><td class="center">副</td><td class="center">19</td><td>（预留行）</td><td class="center">—</td></tr>
+    <tr><td class="center">10</td><td>三管塔 / 塔桅本体</td><td class="center">座</td><td class="center"></td><td></td><td class="center"></td></tr>
+  </table>
+  </div>
+  <p>新增数量红色标注；GNSS 馈线、GNSS 天线行标"拆除"，RRU 电源线行标"替换"。</p>
+
+  <h3>4.5 安全风险因素表（安全说明图一 / 二）</h3>
+  <p>表头：序号 / 工程作业环节 / 风险因素 / 风险说明 / 风险处置方案及安全施工说明 / <b>本站是否涉及</b>（逐项打 √）。</p>
+  <ul>
+    <li><b>设备安装部分（表一，13 项）</b>：机房设备安装（设备超重、板卡拔插错误、电源极性相位、插座插头漏电、墙块滑落、易燃易爆堆放、梯子使用、登高施工）、搬运设备材料、施工全程安装失误、抗震加固缺失、设备加电、拆除设备防护、布放各类线缆、临时用电。</li>
+    <li><b>天馈安装部分（表二，20 项）</b>：高空安装设备、高空物件掉落、天馈设备吊装、电源操作失误、高压线附近建站、高温/酒后作业、恶劣天气、破坏已有天面设备、杆塔安装不规范、天馈抗震加固、防雷接地、有限空间、易燃易爆有毒气体、野外作业、邻近道路施工、天馈拆除防护。</li>
+  </ul>
+
+  <h3>4.6 强制性标准规范清单（安全说明图一，13 项）</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th style="width:150px">标准号</th><th>名称</th><th style="width:110px">类别</th></tr>
+    <tr><td>GB/T 51369-2019</td><td>通信设备安装工程抗震设计标准</td><td>国家标准</td></tr>
+    <tr><td>GB 51194-2016</td><td>通信电源设备安装工程设计规范</td><td>国家标准</td></tr>
+    <tr><td>GB 50689-2011</td><td>通信局（站）防雷与接地工程设计规范</td><td>国家标准</td></tr>
+    <tr><td>GB/T 51391-2019</td><td>通信工程建设环境保护技术标准</td><td>国家标准</td></tr>
+    <tr><td>GB 50016-2014</td><td>建筑设计防火规范</td><td>国家标准</td></tr>
+    <tr><td>GB 50201-2014</td><td>防洪标准</td><td>国家标准</td></tr>
+    <tr><td>YD 5201-2014</td><td>通信建设工程安全生产操作规范</td><td>行业标准</td></tr>
+    <tr><td>YD/T 5054-2019</td><td>通信建筑抗震设防分类标准</td><td>行业标准</td></tr>
+    <tr><td>YD/T 5060-2019</td><td>通信设备安装抗震设计图集</td><td>行业标准</td></tr>
+    <tr><td>YD/T 5230-2016</td><td>移动通信基站工程技术规范</td><td>行业标准</td></tr>
+    <tr><td>YD 5003-2014</td><td>通信建筑工程设计规范</td><td>行业标准</td></tr>
+    <tr><td>YD/T 5264-2021</td><td>数字蜂窝移动通信网 5G 无线网工程技术规范</td><td>行业标准</td></tr>
+  </table>
+  </div>
+</section>
+
+<!-- ============ 05 图例 ============ -->
+<section id="s5">
+  <h2>五、图例与标注体系<span class="en">LEGENDS</span></h2>
+  <div class="cols2">
+    <div>
+      <h4>设备状态图例（机房图，5 种）</h4>
+      <p><span class="badge b-blue">新增设备</span><span class="badge b-gray">原有设备</span><span class="badge b-green">预留机位</span><span class="badge b-gold">扩容设备</span><span class="badge b-red">拆迁设备</span></p>
+      <h4>天线图例（天馈图，10 种）</h4>
+      <ul>
+        <li>新增 / 原有 × 单频定向天线</li>
+        <li>新增 / 原有 × 多频定向天线</li>
+        <li>新增 / 原有 × AAU</li>
+        <li>新增 / 原有 × GNSS 天线（GPS 天线）</li>
+        <li>其他运营商天线、馈线接地点</li>
+      </ul>
+      <h4>线缆图例（路由图，3 种）</h4>
+      <p><span class="badge b-red">电源线</span><span class="badge b-green">地线</span><span class="badge b-gold">光缆</span>　+ "线缆起始点"标记</p>
+    </div>
+    <div>
+      <h4>标注要素</h4>
+      <ul>
+        <li><b>经纬度</b>：图角"经度 / 纬度"两行，带 ° 符号</li>
+        <li><b>标高标尺</b>：天馈 I-I 剖面左侧标尺，单位 mm（如 0 / 4000 / 7000 / 15000 / 24000 / 26000）</li>
+        <li><b>平台分层名</b>：一层 / 四层 / 五层炮楼 / 12 米增高架</li>
+        <li><b>方位角</b>：R 标记；<b>指北针</b>：N</li>
+        <li><b>尺寸标注</b>：房间与设备布置尺寸（mm）</li>
+        <li><b>洞口标注</b>：原有馈线洞 500×400、下沿距地 2100</li>
+        <li><b>防雷要求</b>：天线须在避雷针 45° 角保护范围内</li>
+        <li><b>I-I 视图标记</b>：剖切符号 + 视图名</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note"><b>天线状态为三态：</b>与表生图系统现有"本网/他网"两态不同，设计院模板中每副天线均有 <span class="badge b-blue">新增</span><span class="badge b-gray">原有</span><span class="badge b-red">拆除</span> 三种状态（部分还有"替换"），且用颜色/线型区分——这是三期数据模型必须扩展的关键点。</div>
+</section>
+
+<!-- ============ 06 字段全景 ============ -->
+<section id="s6">
+  <h2>六、站点数据字段全景<span class="en">DATA FIELDS</span></h2>
+  <p class="lead">从两张图纸反推出的"单站完整数据画像"，按图层分组——即三期 Excel 模板扩展的目标字段：</p>
+
+  <h3>6.1 工程信息（图框级）</h3>
+  <table>
+    <tr><th style="width:190px">字段</th><th>示例值</th><th>来源图纸</th></tr>
+    <tr><td>设计院名称</td><td>中国移动通信集团设计院有限公司</td><td>标题栏</td></tr>
+    <tr><td>项目名称 / 编号</td><td>2025 年极简站 / 2025HACT0001-002-WX-LY</td><td>标题栏、图号</td></tr>
+    <tr><td>出图日期 / 比例 / 单位</td><td>2025.05 或 2025.06 / 1:50 / mm</td><td>标题栏</td></tr>
+    <tr><td>图号序号</td><td>01~07 + 安全措施说明（一）（二）</td><td>标题栏</td></tr>
+    <tr><td>签署人 ×5</td><td>项目总负责人 / 专业负责人 / 设计人 / 校审人 / 专业审核人</td><td>标题栏</td></tr>
+  </table>
+
+  <h3>6.2 站点基本信息</h3>
+  <table>
+    <tr><th style="width:190px">字段</th><th>示例值</th></tr>
+    <tr><td>站名</td><td>洛阳涧西大张物流园西 / 洛阳涧西广文路通信站</td></tr>
+    <tr><td>机房地址</td><td>广文路通信站（无线机房三层）</td></tr>
+    <tr><td>远端站地址</td><td>广文南路与科文路交叉口向南 200 米路西（可与机房分离）</td></tr>
+    <tr><td>经度 / 纬度</td><td>112.33731° / 34.66903°</td></tr>
+    <tr><td>站点性质</td><td>新建 / 改造 / 极简站 / CRAN 搬迁（决定说明段文字与拆除内容）</td></tr>
+    <tr><td>抗震设防烈度</td><td>7 度</td></tr>
+  </table>
+
+  <h3>6.3 塔桅与天面</h3>
+  <table>
+    <tr><th style="width:190px">字段</th><th>示例值</th></tr>
+    <tr><td>塔桅类型</td><td>35m 景观塔（单管塔）/ 楼顶 12m 增高架 / 三管塔 / 拉线塔…</td></tr>
+    <tr><td>承载物</td><td>地面独立塔 / 五层建筑 + 炮楼（楼顶站需注明楼层与炮楼）</td></tr>
+    <tr><td>平台 / 挂高</td><td>地面塔：平台序号 + 标高（24000~33000）；增高架：天线挂高（24000 / 26000）</td></tr>
+    <tr><td>天线明细 ×N</td><td>类型（4+4 / 单频 / 多频 / TDL-F / AAU）+ 状态（新增/原有/拆除/替换）+ 挂高 + 方位角 R</td></tr>
+    <tr><td>GNSS/GPS 天线</td><td>状态（新增 / 原有 / 拆除）+ 是否含避雷器</td></tr>
+  </table>
+
+  <h3>6.4 机房与机架设备</h3>
+  <table>
+    <tr><th style="width:190px">字段</th><th>示例值</th></tr>
+    <tr><td>机房位置 / 尺寸</td><td>无线机房（三层）；平面尺寸标注若干段（如 7000/3500/16000/4000/3000/1500）</td></tr>
+    <tr><td>走线架</td><td>水平 / 垂直，宽 500mm，长度（米）</td></tr>
+    <tr><td>馈线洞</td><td>500×400，下沿距地 2100</td></tr>
+    <tr><td>综合柜</td><td>600×600×2000mm（宽×深×高）；1U=44.45mm；安装螺栓 M6×4</td></tr>
+    <tr><td>机架设备清单 ×17</td><td>见 4.1 节（名称 / 型号 / 厂家 / 规格 / 单位 / 原有·新增·拆除数量）</td></tr>
+    <tr><td>BBU 板件级</td><td>UMPTg（主控）/ UBBP（基带）/ UPEUe（电源）/ FANf（风扇）</td></tr>
+    <tr><td>传输</td><td>至 SPN；6 波无源波分 + 无源插框（COM / NA 端口）</td></tr>
+  </table>
+
+  <h3>6.5 线缆与材料</h3>
+  <table>
+    <tr><th style="width:190px">字段</th><th>示例值</th></tr>
+    <tr><td>导线路由 ×9</td><td>编号 001~009，由→到、敷设方式、规格、条数、颜色、长度（008/009 长度详见天馈图）</td></tr>
+    <tr><td>天馈材料 ×19</td><td>见 4.4 节（名称 / 规格 / 单位 / 新增·拆除数量）</td></tr>
+  </table>
+</section>
+
+<!-- ============ 07 启示 ============ -->
+<section id="s7">
+  <h2>七、对三期开发的启示<span class="en">NEXT STEPS</span></h2>
+  <p class="lead">将设计院模板与现有"表生图"系统（一期网页出图 + 二期 DXF 导出）对照，差距与可行路线如下：</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th style="width:56px">#</th><th style="width:210px">差距点</th><th>现状</th><th>三期对齐方案</th></tr>
+    <tr><td class="center">1</td><td>成套图纸结构</td><td>系统输出单张"立面图 + 俯视图 + 明细表"</td><td>按"图纸类型"分组输出多张 DXF（天馈图、路由图、平面图、综合柜立面图），安全说明类做成<b>固定模板段</b>直接套用</td></tr>
+    <tr><td class="center">2</td><td>天线三态</td><td>仅"本网 / 他网"两态</td><td>扩展状态字段：<span class="badge b-blue">新增</span><span class="badge b-gray">原有</span><span class="badge b-red">拆除</span>（+替换），绘图用线型/颜色区分，图例同步扩展</td></tr>
+    <tr><td class="center">3</td><td>表格体系</td><td>单一"设备安装明细表"</td><td>补齐 4 类标准表：安装工作量表（17 行固定设备 + 三态数量）、电缆明细表（9 行固定路由）、天馈材料表（19 行）、安装/拆除量汇总</td></tr>
+    <tr><td class="center">4</td><td>图号与标题栏</td><td>简易标题栏</td><td>按 2025HACT0001-XXX-WX-LY-XX 规则自动编号，标题栏补齐 5 项签署栏</td></tr>
+    <tr><td class="center">5</td><td>塔桅标注</td><td>平台标注（从下往上编号）</td><td>兼容两种模式：地面塔按平台标高（24000~33000）、楼顶站按"楼层 + 增高架 + 挂高"标尺（0/…/15000/24000/26000）</td></tr>
+    <tr><td class="center">6</td><td>综合柜立面图</td><td>无</td><td>新增"机架立面"图型：600×600×2000 柜体 + U 位排布（BBU/DCDU/直流分配单元/无源波分），1U=44.45mm</td></tr>
+    <tr><td class="center">7</td><td>固定文字模板</td><td>无</td><td>安全说明一/二、风险表 33 项、规范清单 13 项、图例表全部为两站一致内容 → 存为内置模板库，仅站点信息段取变量</td></tr>
+  </table>
+  </div>
+  <div class="note"><b>建议实施顺序：</b>① 先扩 Excel 模板字段（天线三态、设备三态数量、导线表、塔桅类型扩展）→ ② 升级 DXF 引擎支持多张图框与固定模板段 → ③ 逐图型移植（天馈图 → 路由图 → 平面图 → 综合柜立面图 → 安全说明图）→ ④ 用这两张真实图纸做回归验证。</div>
+</section>
+
+<div style="text-align:center;color:var(--muted);font-size:12.5px;padding:6px 0 20px;">
+  解析方法：浩辰 CAD 2024 COM 接口 DWG→DXF（2004 版）→ ezdxf 提取 1135 / 1165 条文本实体 · 生成于 2026-09-23 · 供"表生图"三期开发参考
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基站表生图系统 v3.0</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="toolbar">
+  <div class="brand">
+    <span class="logo">塔</span>
+    <div>
+      <div class="name">基站表生图系统</div>
+      <div class="sub">数据画像 → 基站图形 · 三期 v3.0 对齐设计院模板</div>
+    </div>
+  </div>
+  <div class="btns">
+    <button id="btnImport" class="btn primary">导入Excel数据</button>
+    <button id="btnLoadDemo" class="btn">载入示例数据</button>
+    <span class="sep"></span>
+    <button id="btnExportPng" class="btn" disabled>导出当前PNG</button>
+    <button id="btnExportAll" class="btn" disabled>批量导出全部PNG(zip)</button>
+    <span class="sep"></span>
+    <button id="btnExportDxf" class="btn" disabled>导出当前DXF</button>
+    <button id="btnExportDxfAll" class="btn" disabled>批量导出DXF(zip)</button>
+    <span class="sep"></span>
+    <button id="btnExportKitDxf" class="btn accent" disabled>整套设计院DXF(zip)</button>
+    <button id="btnExportKitPng" class="btn accent" disabled>整套设计院PNG(zip)</button>
+    <span class="sep"></span>
+    <select id="sheetSel" class="sel" disabled>
+      <option value="0">基站图（一二期示意）</option>
+      <option value="1">预览：机房布置平面图</option>
+      <option value="2">预览：综合柜立面图</option>
+      <option value="3">预览：导线路由图</option>
+      <option value="4">预览：天馈线系统图</option>
+      <option value="5">预览：安全说明图（一）</option>
+      <option value="6">预览：安全说明图（二）</option>
+    </select>
+    <span class="sep"></span>
+    <label class="chk"><input type="checkbox" id="chkPlan" checked>俯视图</label>
+    <label class="chk"><input type="checkbox" id="chkTable" checked>明细表</label>
+    <label class="chk"><input type="checkbox" id="chkDim" checked>尺寸标注</label>
+    <span class="sep"></span>
+    <button id="btnHelp" class="btn ghost">使用说明</button>
+  </div>
+</header>
+
+<main id="layout">
+  <aside id="sidebar">
+    <div class="side-head">
+      <input type="text" id="searchBox" placeholder="搜索基站名称…">
+      <div id="statLine" class="stat">尚未导入数据</div>
+    </div>
+    <ul id="stationList"></ul>
+    <div id="checkPanel" class="check-panel hidden">
+      <div class="check-title" id="checkTitle">校验结果</div>
+      <ul id="checkList"></ul>
+    </div>
+  </aside>
+
+  <section id="stage">
+    <div id="canvasWrap" class="hidden">
+      <canvas id="paper"></canvas>
+      <div id="zoomTip">滚轮缩放 · 拖拽平移 · 双击复位</div>
+    </div>
+    <div id="emptyTip">
+      <div class="icon">▦</div>
+      <p>导入《基站数据模板.xlsx》后自动生成基站图</p>
+      <p class="dim">支持：单管塔 / 角钢塔 / 三管塔 / 拉线塔 / H杆 / 楼顶抱杆 / 楼顶平台 / 美化塔</p>
+    </div>
+  </section>
+</main>
+
+<footer id="statusbar">
+  <span id="stLeft">就绪</span>
+  <span id="stRight">本网天线彩色标注 · 他网天线仅标运营商名称</span>
+</footer>
+
+<!-- 使用说明弹窗 -->
+<div id="helpModal" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-head">使用说明<button class="close" data-close="helpModal">×</button></div>
+    <div class="modal-body">
+      <ol>
+        <li><b>填写模板</b>：打开《基站数据模板.xlsx》，主表一行一站，安装明细表一行一根抱杆。两表通过「基站名称」关联。</li>
+        <li><b>导入</b>：点击「导入Excel数据」选择填好的工作簿，系统自动解析校验并在左侧列出全部基站。</li>
+        <li><b>查看</b>：点击左侧基站名切换预览；滚轮缩放，拖拽平移，双击复位。</li>
+        <li><b>导出</b>：单站出图用「导出当前PNG」；整批出图用「批量导出全部PNG」，自动打包zip。</li>
+      </ol>
+      <div class="note">
+        绘图约定：主表「塔高」为塔体自身高度；楼顶站需填「支承物高度」（楼高）；明细表「平台标高」为相对地面总标高（楼顶站=楼高+离楼顶高度）。<br>
+        中国电信为本网（彩色天线+制式标注），移动/联通/广电等其他运营商仅绘制轮廓并标注名称。
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn primary" data-close="helpModal">知道了</button></div>
+  </div>
+</div>
+
+<input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none">
+
+<script src="js/libs/xlsx.full.min.js"></script>
+<script src="js/libs/jszip.min.js"></script>
+<script src="js/data-model.js?v=4"></script>
+<script src="js/draw-core.js?v=4"></script>
+<script src="js/tower-templates.js?v=4"></script>
+<script src="js/sheet-templates.js?v=4"></script>
+<script src="js/dxf.js?v=4"></script>
+<script src="js/app.js?v=4"></script>
+</body>
+</html>
